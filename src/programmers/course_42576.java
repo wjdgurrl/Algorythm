@@ -22,7 +22,11 @@ public class course_42576 {
         String temp = "";
         String[] check = new String[participant.length];
         for (int i = 0; i < participant.length; i++) {
+            System.out.println(i+"\n");
+            System.out.println(participant[i]);
             for (int k = 0; k < completion.length; k++) {
+                System.out.println("\n");
+                System.out.println(completion[k]);
                 if (participant[i].equals(completion[k])) {
                     check[i] = "1";
                 } else {
