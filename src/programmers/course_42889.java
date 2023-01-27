@@ -29,8 +29,8 @@ class Failure{
             t = stages.length;
         }
 
-        while (t == 0) {
-            System.out.println();;
+        while (t == 0); {
+            System.out.println();
         }
 
 
