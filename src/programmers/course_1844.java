@@ -3,47 +3,28 @@ package programmers;
 import java.util.LinkedList;
 import java.util.Queue;
 
+
 public class course_1844 {
     public static void main(String[] args) {
-        //distance.bfs();
+        System.out.println(solution(new int[][]{{1, 0, 1, 1, 1}, {1, 0, 1, 0, 1}, {1, 0, 1, 1, 1}, {1, 1, 1, 0, 1}, {0, 0, 0, 0, 1}}));
+        System.out.println(solution(new int[][]{{1, 0, 1, 1, 1}, {1, 0, 1, 0, 1}, {1, 0, 1, 1, 1}, {1, 1, 1, 0, 0}, {0, 0, 0, 0, 1}}));
     }
 
     private static final int[] dx = {1, -1, 0, 0};
     private static final int[] dy = {0, 0, 1, -1};
 
-}
+    //0이 있는거 1이 벽 없는거
+    public static int solution(int[][] maps) {
+        boolean[][] visited = new boolean[maps.length][maps[0].length];
 
-//start = 0,0
-//end = length,length[]
-
-class distance{
-    public static int bfs(int[][] maps){
-        int answer = 0;
-        int col = maps.length;
-        int row = maps[0].length;
-        boolean[][] visit_map = new boolean[col][row];
-        visit_map[0][0] = true; // start
-
-        Queue<int[]> queue = new LinkedList<>();//node
-
-        while(!queue.isEmpty()){
-            int[] q = queue.poll();
-
-            //if(visit_map[q[0]][1])
-
-
-
-
-
-
+        /*
+        {1, 0, 1, 1, 1},
+        {1, 0, 1, 0, 1},
+        {1, 0, 1, 1, 1},
+        {1, 1, 1, 0, 1},
+        {0, 0, 0, 0, 1}
         }
-
-
-
-
-
-
-
+        */
 
         return bfs(maps, visited, new Node(0, 0, 1));
     }
