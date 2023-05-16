@@ -1,5 +1,6 @@
 package programmers;
-
+import java.io.*;
+import java.util.*;
 //https://school.programmers.co.kr/learn/courses/30/lessons/42576
 /*
 수많은 마라톤 선수들이 마라톤에 참여하였습니다. 단 한 명의 선수를 제외하고는 모든 선수가 마라톤을 완주하였습니다.
@@ -9,39 +10,22 @@ package programmers;
 
 public class course_42576 {
     public static void main(String[] args) {
-        //String participant[] = new String[3];
-        //String completion[] = new String[2];
-
-        String[] participant = new String[]{"marina", "josipa", "nikola", "vinko", "filipa"};
-        String[] completion = new String[]{"josipa", "filipa", "marina", "nikola"};
-
+        String[] participant = new String[]{"mislav", "stanko", "mislav", "ana"};
+        String[] completion = new String[]{"stanko", "ana", "mislav"};
         System.out.println(solution(participant, completion));
     }
 
     public static String solution(String[] participant, String[] completion) {
-        String temp = "";
-        String[] check = new String[participant.length];
-        for (int i = 0; i < participant.length; i++) {
-            System.out.println(i+"\n");
-            System.out.println(participant[i]);
-            for (int k = 0; k < completion.length; k++) {
-                System.out.println("\n");
-                System.out.println(completion[k]);
-                if (participant[i].equals(completion[k])) {
-                    check[i] = "1";
-                } else {
-                    check[i] = "0";
-                }
+        String answer = "";
+        Arrays.sort(participant);
+        Arrays.sort(completion);
+        for (int i = 0; i < completion.length; i++) {
+            if(participant[i] != completion[i]){
+                answer = participant[i];
+                break;
             }
         }
-        for (int j = 0; j < participant.length; j++) {
-            if (check[j].equals("0")) {
-                temp = participant[j];
-            }
-        }
-        String answer = temp;
-
-
+        if(answer.equals("")) answer = participant[participant.length-1];
         return answer;
     }
 }
