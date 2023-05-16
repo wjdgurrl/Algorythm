@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 public class Arraylist {
     public static void main(String[] args) {
+
         ArrayList<String> a = new ArrayList<>();
         a.add("138");
         a.add("139");
