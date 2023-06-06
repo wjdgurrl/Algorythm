@@ -13,5 +13,9 @@ public class parse {
         String t1 = String.valueOf(n);
         String t2 = Integer.toString(n);
         // 정수 - > 문자욜
+        System.out.println(n);
+        System.out.println(k);
+        System.out.println(t1);
+        System.out.println(t2);
     }
 }
