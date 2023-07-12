@@ -20,4 +20,7 @@ public class course_150368 {
 
         return answer;
     }
+    public int aaa(int n){
+        return n;
+    }
 }
