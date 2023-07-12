@@ -14,8 +14,8 @@ public class course_118667 {
     public int solution(int[] queue1, int[] queue2){
         int answer = 0;
         long e = (queue1.length + queue2.length)* 2L;
-        q1total = val_add(queue1,q1,q1total);
-        q2total = val_add(queue2,q2,q2total);
+        q1total = val_add(queue1,q1);
+        q2total = val_add(queue2,q2);
         //System.out.println(total);
         if((q1total+q2total)%2 == 0){
             while(q1total != q2total){
@@ -41,7 +41,8 @@ public class course_118667 {
 
         return answer;
     }
-    long val_add(int[] queue,Queue<Long> q,long qtotal){
+    long val_add(int[] queue,Queue<Long> q){
+        long qtotal = 0;
         for (int i = 0; i < queue.length; i++) {
             long num = queue[i];
             q.offer(num);
