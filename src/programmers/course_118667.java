@@ -49,10 +49,4 @@ public class course_118667 {
         }
         return qtotal;
     }
-    void val_set(Queue<Long> q1, Queue<Long> q2){
-        long num = q1.poll();
-        q2.offer(num);
-        q2total += num;
-        q1total -= num;
-    }
 }
