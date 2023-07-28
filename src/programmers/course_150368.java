@@ -10,14 +10,29 @@ public class course_150368 {
     }
     public int[] solution(int[][] users, int[] emoticons){
         int[] answer = {};
+        double percent;
+        int plusUser  = 0;
+        int notplus = 0;
+        ArrayList<Integer> money = new ArrayList<>();
         for (int i = 0; i < users.length; i++) {
-
+            int total = 0;
+            percent = users[i][0];
+            for (int j = 0; j < emoticons.length; j++) {
+                money.add((int) (emoticons[j] * (100 - percent) / 100));
+                total += money.get(j);
+            }
+            if (total >= users[i][1]){
+                plusUser ++;
+            }
+            else if(total < users[i][1]){
+                for (int j = 0; j < money.size(); j++) {
+                    notplus += money.get(j);
+                }
+            }
+            answer = new int[]{plusUser,notplus};
         }
 
 
         return answer;
-    }
-    public int aaa(int n){
-        return n;
     }
 }
