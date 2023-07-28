@@ -10,11 +10,8 @@ public class course_150368 {
     }
     public int[] solution(int[][] users, int[] emoticons){
         int[] answer = {};
-        for(int i = 0; i< users.length; i++){
+        for (int i = 0; i < users.length; i++) {
 
-            for (int j = 0; j < users.length; j++) {
-
-            }
         }
 
 

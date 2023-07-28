@@ -16,7 +16,6 @@ public class course_118667 {
         long e = (queue1.length + queue2.length)* 2L;
         q1total = val_add(queue1,q1);
         q2total = val_add(queue2,q2);
-        //System.out.println(total);
         if((q1total+q2total)%2 == 0){
             while(q1total != q2total){
                 if(q1total>q2total){
