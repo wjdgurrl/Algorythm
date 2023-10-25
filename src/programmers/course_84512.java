@@ -18,7 +18,6 @@ public class course_84512 {
         this.O = I+gap;
         this.U = O+gap;
     }
-
     public int solution(String word){
         int answer = 0;
         String[] arr= word.split("");;
@@ -29,7 +28,6 @@ public class course_84512 {
             if(arr[i].equals("I")) answer+=I;
             if(arr[i].equals("O")) answer+=O;
             if(arr[i].equals("U")) answer+=U;
-
             if(i+1 == 1) setVal(156); //156
             if(i+1 == 2) setVal(31);
             if(i+1 == 3) setVal(6);
