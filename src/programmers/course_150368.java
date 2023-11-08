@@ -8,31 +8,32 @@ public class course_150368 {
         course_150368 cc = new course_150368();
         System.out.println(Arrays.toString(cc.solution(users, emotions)));
     }
-    static int[] sales = new int[]{10,20,30,40};
-    static ArrayList<int[]> arr = new ArrayList<>();
+    ArrayList<int[]> list = new ArrayList<>();
     public int[] solution(int[][] users, int[] emoticons){
         int[] answer = {};
-        aaa(users,emoticons,0);
-        System.out.println(Arrays.toString(arr.get(0)));
+         //최종 배열
+        for (int i = 10; i <= 40 ; i+=10) {
+            int[] total = new int[users.length];
+            PlusUser(total, users, emoticons,i,0);
+        }
         return answer;
     }
-    public void aaa(int[][] users, int[] emoticons,int depth){
-        if(depth == users.length) return;
-        int[] result = new int[users.length]; // {구매비용}
-
+    public void PlusUser(int[] total, int[][] users, int[] emoticons,int discount, int depth){
+        if(depth == emoticons.length) return;
+        int[] discount_emoticons = total.clone();
         for (int i = 0; i < users.length; i++) {
-            for (int j = 0; j < sales.length; j++) {
-                if (users[i][0] <= sales[j]) {
-                    int purchase = emoticons[depth] * (100 - users[i][0]) / 100;
-                    result[i] = purchase;
-                    break;
-                }
-                if(users[i][0] > sales[j]){
-                    result[i] = emoticons[depth];
-                }
+            if(users[i][0] <= discount){
+                continue;
+            }
+            else{
+                discount_emoticons[i] += emoticons[depth] * (100 - discount) / 100 ;
             }
         }
-        arr.add(result);
-        aaa(users, emoticons, ++depth);
+        for (int i = 10; i <= 40; i += 10) {
+            PlusUser(discount_emoticons, users, emoticons,i,++depth);
+        }
+        if(depth == emoticons.length-1){
+            list.add(discount_emoticons);
+        }
     }
 }
