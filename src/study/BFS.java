@@ -2,15 +2,16 @@ package study;
 import java.io.*;
 import java.util.*;
 
+
 public class BFS {
 
-/* test data
-4 6
-101111
-101010
-101011
-111011
- */
+    /* test data
+    4 6
+    101111
+    101010
+    101011
+    111011
+     */
     // 동서남북
     private static int[] dx = {0, 0, 1, -1};
     private static int[] dy = {1, -1, 0, 0};
@@ -36,9 +37,8 @@ public class BFS {
             }
         }
 
-        System.out.println(Arrays.deepToString(array));
-
         q.offer(new Node(0, 0, 1));
+        visited[0][0] = true;
         while (!q.isEmpty()) {
             Node visitNode = q.poll();
 
@@ -49,7 +49,7 @@ public class BFS {
             }
 
             // 방문 체크
-            visited[visitNode.x][visitNode.y] = true;
+            //visited[visitNode.x][visitNode.y] = true;
 
             // 이동
             for (int i = 0; i < 4; i++) {
@@ -69,6 +69,7 @@ public class BFS {
                 // 노드 이동
                 if (array[nextX][nextY] == 1) {
                     q.offer(new Node(nextX, nextY, visitNode.movement + 1));
+                    visited[nextX][nextY] = true;
                 }
 
 
