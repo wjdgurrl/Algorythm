@@ -3,30 +3,63 @@ import java.util.*;
 import java.io.*;
 public class problem_10828 {
     public static void main(String[] args) throws IOException{
-        Stack<Integer> stack = new Stack<>();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        stackCommand sc = new stackCommand();
         int num = Integer.parseInt(br.readLine());
-        for (int i = 0; i < num; i++) {
-            String order = br.readLine();
-            int emptyTrue = 0;
-            if(order.equals("top")) stack.peek();
-            if(order.equals("size")) System.out.println(stack.size());
-            if(order.equals("empty")) {
-                emptyTrue = stack.isEmpty()?1:0;
-                System.out.println(emptyTrue);
+        for(int i = 0; i < num; i++){
+            String[] order = br.readLine().split(" ");
+            switch (order[0]){
+                case "push" :
+                    sc.push(Integer.parseInt(order[1]));
+                    break;
+                case "pop" :
+                    System.out.println(sc.pop());
+                    break;
+                case "top" :
+                    System.out.println(sc.peek());
+                    break;
+                case "size" :
+                    System.out.println(sc.size());
+                    break;
+                case "empty" :
+                    System.out.println(sc.empty());
+                    break;
             }
-            if(order.equals("pop")) stack.pop();
-            else stack.push(Integer.parseInt(order.substring(5,6)));
+
         }
+
+
+
     }
-    private static class orderMenu{
-        private String order;
+    private static class stackCommand{
+        private Stack<Integer> stack;
 
-        orderMenu(String order){
-            this.order = order;
+        private stackCommand(){
+            this.stack = new Stack<>();
         }
-        private orderMenu topOrder(){
-
+        private void push(int t){
+            this.stack.push(t);
+        }
+        private int pop(){
+            if(this.stack.isEmpty()){
+                return -1;
+            }
+            return this.stack.pop();
+        }
+        private int peek(){
+            if(this.stack.isEmpty()){
+                return -1;
+            }
+            return this.stack.peek();
+        }
+        private int size(){
+            return this.stack.size();
+        }
+        private int empty(){
+            if(this.stack.isEmpty()){
+                return 1;
+            }
+            return 0;
         }
     }
 }
