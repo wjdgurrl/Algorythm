@@ -13,7 +13,7 @@ public class problem_1966 {
             int M = Integer.parseInt(fisrtInput[1]);//찾아야 하는 index
             String[] secondInput = br.readLine().split(" ");
             for (int j = 0; j < secondInput.length; j++) {
-                processQueue.addProcess(new Process(j,M));
+                processQueue.addProcess(new Process(j,Integer.parseInt(secondInput[j])));
             }
             while(!processQueue.isEmpty()){
                 Process CurrentProcess = processQueue.nextQueue();
