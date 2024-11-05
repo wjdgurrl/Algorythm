@@ -5,7 +5,7 @@ public class course_42584 {
     public static void main(String[] args) {
 
     }
-    public int[] solution(int[] prices){
+    /*public int[] solution(int[] prices){
         int[] answer = {};
         Deque<Prices> deque = new LinkedList<>();
         answer = new int[deque.size()];
@@ -47,5 +47,5 @@ public class course_42584 {
             }
             return -100;
         }
-    }
+    }*/
 }
