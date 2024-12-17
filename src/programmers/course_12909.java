@@ -9,17 +9,17 @@ public class course_12909 {
     }
     public static boolean stackCheck(String s){
         boolean answer = false;
-        String[] input = s.split("");
-        Stack<String> stack = new Stack<>();
-        for (int i = 0; i < input.length; i++) {
-            if(input[0].equals(")")){
-                stack.push(input[0]);
-                break;
-            }
-            if(!stack.isEmpty() && !(stack.peek().equals(input[i]))){
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch == '('){
+                stack.push(ch);
+            }else if(ch == ')'){
+                if(stack.isEmpty()){
+                    return answer;
+                }
                 stack.pop();
             }
-            stack.push(input[i]);
         }
         answer = stack.isEmpty();
         return answer;
