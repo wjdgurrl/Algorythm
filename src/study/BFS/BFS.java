@@ -1,4 +1,4 @@
-package study;
+package study.BFS;
 import java.io.*;
 import java.util.*;
 
