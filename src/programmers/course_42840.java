@@ -19,9 +19,9 @@ public class course_42840 {
         for (int i = 0; i < 3; i++) {
             student student = new student();
             switch (i + 1) {
-                /*case 1 -> student.setAns(Arrays.asList(1, 2, 3, 4, 5));
+                case 1 -> student.setAns(Arrays.asList(1, 2, 3, 4, 5));
                 case 2 -> student.setAns(Arrays.asList(2, 1, 2, 3, 2, 4, 2, 5));
-                case 3 -> student.setAns(Arrays.asList(33, 11, 22, 44, 55));*/
+                case 3 -> student.setAns(Arrays.asList(33, 11, 22, 44, 55));
             }
             arr.add(student);
         }
