@@ -37,6 +37,7 @@ public class BFS {
             }
         }
 
+
         q.offer(new Node(0, 0, 1));
         visited[0][0] = true;
         while (!q.isEmpty()) {
