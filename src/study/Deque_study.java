@@ -9,7 +9,7 @@ public class Deque_study {
     }
     public int[] solution(int[] arr) throws InterruptedException{
         int[] answer = {};
-        Deque<Integer> stk = new LinkedList<>();
+        ArrayDeque<Integer> stk = new ArrayDeque<>();
         int i = 0;
         while(i < arr.length){
             if(stk.isEmpty()){
