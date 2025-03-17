@@ -1,4 +1,4 @@
-package Backjoon_level;
+package study.Sort;
 
 import java.util.*;
 import java.io.*;
