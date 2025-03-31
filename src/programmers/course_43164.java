@@ -13,17 +13,55 @@ import java.io.*;
         모든 도시를 방문할 수 없는 경우는 주어지지 않습니다.
 
         [["ICN", "JFK"], ["HND", "IAD"], ["JFK", "HND"]] 결과 ["ICN", "JFK", "HND", "IAD"]*/
-
-
-
+//https://school.programmers.co.kr/learn/courses/30/lessons/43164
 public class course_43164 {
     public static void main(String[] args) {
-        System.out.println();
+        course_43164 aa = new course_43164();
+        System.out.println(aa.solution(new String[][]{{"ICN", "SFO"}, {"ICN", "ATL"}, {"SFO", "ATL"}, {"ATL", "ICN"}, {"ATL","SFO"}}));
     }
 
+    private static boolean[] visited;
     public String[] solution(String[][] tickets) {
         String[] answer = new String[tickets.length + 1];
+        visited = new boolean[tickets.length];
+
+        BFS(tickets);
+
         return answer;
+    }
+
+
+    private static void BFS(String[][] tickets){
+        ArrayDeque<Node> deque = new ArrayDeque<>();
+        String[] answer = new String[tickets.length + 1];
+        HashMap<Integer,String> temp = new HashMap<>();
+
+        //처음 출발지 정하기
+        for (int i = 0; i < tickets.length; i++) {
+            if(tickets[i][0].equals("ICN")){
+                temp.put(i,tickets[i][1]);
+            }
+
+        }
+
+
+    }
+
+    //도착지 정보 int형으로 반환
+    private static int getCh(String end){
+        return end.charAt(0) + end.charAt(1) + end.charAt(2);
+    }
+
+    private static class Node{
+        private String start;
+        private String end;
+        private int count;
+
+        Node(String start, String end, int count){
+            this.start = start;
+            this.end = end;
+            this.count = count;
+        }
     }
 }
 
