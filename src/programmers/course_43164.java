@@ -17,51 +17,58 @@ import java.io.*;
 public class course_43164 {
     public static void main(String[] args) {
         course_43164 aa = new course_43164();
-        System.out.println(aa.solution(new String[][]{{"ICN", "SFO"}, {"ICN", "ATL"}, {"SFO", "ATL"}, {"ATL", "ICN"}, {"ATL","SFO"}}));
+        System.out.println(Arrays.toString(aa.solution(new String[][]{{"ICN", "SFO"}, {"ICN", "ATL"}, {"SFO", "ATL"}, {"ATL", "ICN"}, {"ATL","SFO"}})));
     }
 
     private static boolean[] visited;
-    public String[] solution(String[][] tickets) {
-        String[] answer = new String[tickets.length + 1];
-        visited = new boolean[tickets.length];
+    private static boolean isArrived; // 도착 여부 확인(조기 종료용)
+    private static String[] answer;
 
-        BFS(tickets);
+    public String[] solution(String[][] tickets) {
+        visited = new boolean[tickets.length];
+        isArrived = false;
+
+
+        //티켓 정렬부터
+        Arrays.sort(tickets, new Comparator<String[]>() {
+            @Override
+            public int compare(String[] o1, String[] o2) {
+                return o1[1].compareTo(o2[1]);
+            }
+        });
+
+        ArrayList<String> route = new ArrayList<>();
+        route.add("ICN");
+
+        dfs("ICN",route,tickets,0);
+        answer= route.toArray(new String[route.size()]);
 
         return answer;
     }
 
+    public void dfs(String current, ArrayList<String> route, String[][] tickets, int depth) {
+        //티켓 끝
+        if(depth == tickets.length){
+            isArrived = true;
+            return;
+        }
 
-    private static void BFS(String[][] tickets){
-        ArrayDeque<Node> deque = new ArrayDeque<>();
-        String[] answer = new String[tickets.length + 1];
-        HashMap<Integer,String> temp = new HashMap<>();
+        for (int i = 0; i  < tickets.length; i++){
+            //도착지 가 같는지
+            if(!visited[i] && tickets[i][0].equals(current)){
+                visited[i] = true;
+                route.add(tickets[i][1]);
+                dfs(tickets[i][1],route,tickets,depth+1);
 
-        //처음 출발지 정하기
-        for (int i = 0; i < tickets.length; i++) {
-            if(tickets[i][0].equals("ICN")){
-                temp.put(i,tickets[i][1]);
+                if(isArrived){
+                    return;
+                }
+                visited[i] = false;
+                route.remove(route.size()-1); // 백트래킹
             }
-
-        }
-
-
-    }
-
-    //도착지 정보 int형으로 반환
-    private static int getCh(String end){
-        return end.charAt(0) + end.charAt(1) + end.charAt(2);
-    }
-
-    private static class Node{
-        private String start;
-        private String end;
-        private int count;
-
-        Node(String start, String end, int count){
-            this.start = start;
-            this.end = end;
-            this.count = count;
         }
     }
+
+
 }
 
