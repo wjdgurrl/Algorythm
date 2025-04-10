@@ -46,7 +46,6 @@ public class course_250134 {
         }
         redVisted[redStart[0]][redStart[1]] = true;
         blueVisted[blueStart[0]][blueStart[1]] = true;
-        //todo 범위체크
         return answer;
     }
 }

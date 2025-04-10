@@ -21,17 +21,22 @@ public class problem_10026 {
             String[] line = br.readLine().split(" ");
             graph[i] = line;
         }
+
+        //정상인의 경우 시작
+        Node start = new Node(0,0);
+        //적록색약의 경우 시작
     }
-    public class BFS{
 
+    private static void BFS(Node start){
+        ArrayDeque<Node> deque = new ArrayDeque<>();
 
-        private static class Node{
-            int x;
-            int y;
-            Node(int x, int y){
-                this.x = x;
-                this.y = y;
-            }
+    }
+
+    private static class Node{
+        int x,y;
+        Node(int x, int y){
+            this.x = x;
+            this.y = y;
         }
     }
 }
