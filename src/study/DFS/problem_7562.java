@@ -5,6 +5,7 @@ import java.io. *;
 
 
 //dfs로는 최단 거리를 구하지 못했음
+//백트래킹으로 구현할 거 같은데 그만..하자
 public class problem_7562 {
 
     private static int[] dy = {-1,-2,-2,-1,1,2,2,1};
