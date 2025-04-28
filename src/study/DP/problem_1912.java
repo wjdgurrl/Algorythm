@@ -10,30 +10,18 @@ public class problem_1912 {
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         long[] arr = readInput(br);
-        long[] dp = new long[(n*(n+1)) / 2];
 
-        for(int i=0; i < n; i++){
-            dp[i] = arr[i];
-        }
-        if(n > 1){
-            for (int i = n; i < dp.length; i++) {
-                dp[i] = dp[i-n] + dp[i-n+1];
-            }
-        }
+        long currentSum = arr[0]; //연속 합, 시작은 처음꺼
+        long maxSum = arr[0]; //연속 합중 최대만 구하기
 
-        System.out.println(Arrays.toString(dp));
+        for (int i = 1; i < n; i++) {
+            currentSum = Math.max(arr[i], currentSum+arr[i]); // 현재까지 연속합을 이어갈지, 새로 시작할지
+            maxSum = Math.max(maxSum, currentSum);
+        }
+        System.out.println(maxSum);
 
     }
 
-    private static long findMax(long[] arr){
-        long max = Long.MIN_VALUE;
-        for(long l : arr){
-            if(max < l){
-                max = l;
-            }
-        }
-        return max;
-    }
 
     private static long[] readInput(BufferedReader br)throws IOException{
         n = Integer.parseInt(br.readLine());
