@@ -16,6 +16,8 @@ public class problem_2457 {
             flowers[i][1] = Integer.parseInt(input[1]);
             flowers[i][2] = Integer.parseInt(input[2]);
             flowers[i][3] = Integer.parseInt(input[3]);
+
+            System.out.println(Arrays.deepToString(flowers));
         }
 
     }
