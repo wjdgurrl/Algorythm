@@ -8,31 +8,20 @@ public class problem_1541 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         ArrayList<Integer> arr= new ArrayList<>();
+        boolean minus = false;
         readInput(br,arr);
         int answer = 0;
-        boolean open = false;
-        int minus= 0;
-
-        for(int i=0;i<arr.size();i++){
-            //괄호 열기
-            if(arr.get(i) < 0 && !open){
-                minus += arr.get(i);
-                open = true;
-            }
-            //괄호 닫기
-            else if(open && arr.get(i) < 0){
-                answer += minus;
-                open = false;
-            }
-            else if((arr.get(i) > 0) && !open){
-                answer += arr.get(i);
+        answer += arr.get(0);
+        for (int i = 1; i < arr.size(); i++) {
+            if(minus || arr.get(i) < 0){
+                minus = true;
+                int temp = Math.abs(arr.get(i));
+                answer -= temp;
             }else{
-                minus -= arr.get(i);
+                answer += arr.get(i);
             }
-
         }
-        System.out.println(answer + minus);
-
+        System.out.println(answer);
     }
     private static void readInput(BufferedReader br, ArrayList<Integer> arr) throws IOException {
         StringBuilder sb = new StringBuilder();
