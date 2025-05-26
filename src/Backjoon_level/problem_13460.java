@@ -51,6 +51,7 @@ public class problem_13460 {
 
 
                 //지나가기전에 판단해야하네
+                //우선순위 red부터 인지 판단하는 코드 수정해야 함ㅁ
                 while(isBound(redNextX + dx[i],redNextY + dy[i]) && !map[redNextY + dy[i]][redNextX + dx[i]].equals("#")){
                     redNextX += dx[i];
                     redNextY += dy[i];
@@ -101,7 +102,6 @@ public class problem_13460 {
     private static boolean isBound(int x, int y){
         return x >= 0 && x < map[0].length && y >= 0 && y < map.length;
     }
-
 
 
     private static void fillMap(BufferedReader br) throws IOException {
