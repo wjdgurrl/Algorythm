@@ -21,6 +21,24 @@ public class course_12915 {
     }
 
     public String[] arrayString(String[] strings, int n) {
+        String temp;
+        for (int i = 0; i < strings.length - 1; i++) {
+            for (int j = i + 1; j < strings.length; j++) {
+                char c1 = strings[i].charAt(n);
+                char c2 = strings[j].charAt(n);
+
+                if (c1 > c2 || (c1 == c2 && strings[i].compareTo(strings[j]) > 0)) {
+                    temp = strings[i];
+                    strings[i] = strings[j];
+                    strings[j] = temp;
+                }
+            }
+        }
+        return strings;
+    }
+
+
+    /*public String[] arrayString(String[] strings, int n) {
         Arrays.sort(strings, (s1, s2) -> {
             if (s1.charAt(n) == s2.charAt(n)) {
                 return s1.compareTo(s2); // 사전순
@@ -29,5 +47,5 @@ public class course_12915 {
             }
         });
         return strings;
-    }
+    }*/
 }
