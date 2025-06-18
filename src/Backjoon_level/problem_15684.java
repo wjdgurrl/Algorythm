@@ -9,9 +9,9 @@ public class problem_15684 {
     public static int N;
     public static int M;
     public static int H;
-    public static boolean[][] visited;
+    public static int answer;
 
-    public static int[] dx = {1,-1,0};
+    //public static int[] dx = {1,-1,0};
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -19,68 +19,64 @@ public class problem_15684 {
         N = Integer.parseInt(line[0]); //세로 x축
         M = Integer.parseInt(line[1]); // 가로 y축
         H = Integer.parseInt(line[2]); // 사다리
+        answer = 4;
         fillMap(br);
-        System.out.println(Arrays.deepToString(map));
-        findLadder();
+
+        dfs(0,1);
+        System.out.println(answer > 3 ? -1 : answer);
     }
 
-    //추가 해야 하는 가로선 개수의 최소
-    public static void findLadder(){
-        ArrayDeque<Node> stack = new ArrayDeque<>();
-        for (int i = 1; i < N + 1; i++) {
-            int startNum = i;
-            System.out.println("startNum = " + startNum);
-            stack.offerLast(new Node(1,i));
-            visited[startNum][i] = true;
+    //dfs로 사다리 타기
+    public static void dfs(int depth, int y){
+        if(depth >= answer) return;
+        if(findLadder()){
+            answer = depth;
+            return;
+        }
+        if(depth == 3) return;
 
-            while(!stack.isEmpty()){
-                Node curNode = stack.pop();
-                if(curNode.y == M + 2 + H) break;
-                System.out.println("curY = " + curNode.y + " curX = " + curNode.x);
-                //좌우 탐색
-                for (int j = 0; j < 3; j++) {
-                    int nextX = curNode.x + dx[j];
+        for (int i = y; i <= H; i++) {
+            for (int j = 1; j < N; j++) {
+                if (map[i][j] == 0 && map[i][j + 1] == 0) {
+                    map[i][j] = 1;
+                    map[i][j + 1] = 2;
+                    dfs(depth + 1, i);
 
-                    if(nextX < 1 || nextX >= N + 2 || curNode.y > M) continue;
-                    if(visited[curNode.y][nextX]) continue;
-                    if(map[curNode.y][nextX] == -1){
-                        visited[curNode.y][nextX] = true;
-                        stack.offerLast(new Node(curNode.y, nextX));
-                        break;
-                    }
-                    visited[curNode.y + 1][nextX] = true;
-                    stack.offerLast(new Node(curNode.y + 1, curNode.x));
+                    map[i][j] = 0;
+                    map[i][j + 1] = 0;
                 }
             }
-
-
         }
+
+
     }
 
-    public static class Node{
-        int y;
-        int x;
-        Node(int y, int x){
-            this.y = y;
-            this.x = x;
+    // 칸 옆에 검사
+    // 어짜피 내려가는거 끝가지 고려 x
+    public static boolean findLadder(){
+        for (int i = 1; i <= N; i++) {
+            int cur = i;
+
+            for (int j = 1; j <= H; j++) {
+                if(map[j][cur] == 1) cur++;
+                else if(map[j][cur] == 2) cur--;
+            }
+            if(cur != i) return false;
         }
+        return true;
     }
+
 
 
     public static void fillMap(BufferedReader br) throws IOException {
-        map = new int[M + 2 + H][N + 2];
-        visited = new boolean[M + 2 + H][N + 2];
-        for (int i = 0; i < map[0].length; i++) {
-            map[0][i] = i;
-            map[map.length - 1][i] = i;
-        }
+        map = new int[H + 2][N + 2];
 
         for (int i = 0; i < M; i++) {
             String[] line = br.readLine().split(" ");
             int a = Integer.parseInt(line[0]);
             int b = Integer.parseInt(line[1]);
-            map[a][b] = -1;
-            map[a][b + 1] = -1;
+            map[a][b] = 1;  // b - b+1
+            map[a][b + 1] = 2;
         }
     }
 }
