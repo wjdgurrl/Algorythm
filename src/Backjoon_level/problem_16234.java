@@ -12,20 +12,46 @@ public class problem_16234 {
     private static int L;
     private static int R;
 
-    private static int[] dx = {-2, 2, 0, 0};
-    private static int[] dy = {0, 0, -2, 2};
+    private static int[] dx = {-1, 1, 0, 0};
+    private static int[] dy = {0, 0, -1, 1};
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         setMap(br);
-        System.out.println(Arrays.deepToString(map));
-        //n = 1일때 예외처리 해주가
+        //System.out.println(Arrays.deepToString(map));
+
+        int day = 0;
+
+        while(true){
+            visited = new boolean[N][N];
+            boolean end = true;
+
+            for (int i = 0; i < N; i++) {
+                for (int j = 0; j < N; j++) {
+                    if(!visited[i][j]){
+                        if(!bfs(i,j)){ // 하나라도 움직이면 계속 해야 됨
+                            end = false;
+                        }
+                    }
+                }
+            }
+            if(end) break;
+
+            day++;
+        }
+        System.out.println(day);
+
 
     }
 
-    public static void bfs(int R, int C){
+    public static boolean bfs(int R, int C){
         ArrayDeque<Node> deque = new ArrayDeque<>();
+        ArrayList<Node> list = new ArrayList<>();
 
+        deque.offerLast(new Node(R, C));
+        list.add(new Node(R, C)); // 이은 나라
+
+        int unionPeople = map[R][C];
         visited[R][C] = true;
 
         while(!deque.isEmpty()){
@@ -36,23 +62,26 @@ public class problem_16234 {
                 int nextC = cur.c + dx[i];
 
                 if(nextR < 0 || nextC < 0 || nextR >= N || nextC >= N) continue;
-                if(map[nextR][nextC] == -1) continue; //국경선
                 if(visited[nextR][nextC]) continue;
-
-                visited[nextR][nextC] = true;
 
                 //인구수 비교
                 if(peopleCompare(map[cur.r][cur.c], map[nextR][nextC])){
-                   //국경 열기
-
-
+                  deque.offerLast(new Node(nextR, nextC));
+                  list.add(new Node(nextR, nextC));
+                  visited[nextR][nextC] = true;
+                  unionPeople += map[nextR][nextC];
                 }
-
-
-
             }
 
         }
+
+        if(list.size() == 1) return true;
+
+        int balancedPeople = unionPeople / list.size();
+        for (Node change : list){
+            map[change.r][change.c] = balancedPeople;
+        }
+        return false;
 
     }
 
