@@ -13,101 +13,133 @@ public class problem_16236 {
     private static int[] dx = new int[]{0,-1,1,0};
     private static int[] dy = new int[]{-1,0,0,1};
 
+    private static int answer = 0;
+
     //우선순위따로 지정해서 fish들 리스트에 추가해주기
     
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
-        int time = 0;
-        fillMap(br);
-        while(remainFish()){
-            visited = new boolean[N][N];
-            moveForEat();
-            time++;
-        }
-        System.out.println(time);
+
+        shark = fillMap(br);
+
+        while(bfs());
+        System.out.println(answer);
+
     }
 
-    //물고기 잔여 확인
-    //20 * 20 400
-    public static boolean remainFish(){
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[0].length; j++) {
-                if(map[i][j] != 9 && map[i][j] > 0) return true;
+    //물고기 찾아보기
+    public static boolean bfs() {
+        ArrayDeque<Node> deque = new ArrayDeque<>();
+        ArrayList<Node> fishs = new ArrayList<>();
+        visited = new boolean[N][N];
+
+        deque.offerLast(new Node(shark.y, shark.x));
+        visited[shark.y][shark.x] = true;
+
+        int time = 0;
+        boolean found = false;
+
+        while (!deque.isEmpty()) {
+            Node cur = deque.pollFirst();
+
+            if (map[cur.y][cur.x] != 0 && map[cur.y][cur.x] < shark.size) {
+                fishs.add(cur);
+                found = true;
             }
+
+            for (int d = 0; d < 4; d++) {
+                int ny = cur.y + dy[d];
+                int nx = cur.x + dx[d];
+
+                if (ny < 0 || ny >= N || nx < 0 || nx >= N) continue;
+                if (visited[ny][nx]) continue;
+                if (map[ny][nx] > shark.size) continue;
+
+                visited[ny][nx] = true;
+                deque.offerLast(new Node(ny, nx));
+            }
+
+
+            if (found) break;
+            time++;
         }
+
+        if (!fishs.isEmpty()) {
+            fishs.sort((a, b) -> {
+                if (a.y == b.y) return a.x - b.x;
+                return a.y - b.y;
+            });
+
+            Node target = fishs.get(0);
+            answer += time;
+
+            // 상어 이동
+            map[shark.y][shark.x] = 0;
+            shark.y = target.y;
+            shark.x = target.x;
+
+            shark.addSizeStack();
+            if (shark.size == shark.sizeStack) {
+                shark.setSize(shark.size + 1);
+                shark.sizeStack = 0;
+            }
+
+            return true;
+        }
+
         return false;
     }
 
-    //물고기 먹으러 가기(가까운애 탐색하기)
-    public static void moveForEat(){
-        ArrayDeque<Shark> deque = new ArrayDeque<>();
-        deque.offerLast(shark);
-        visited[shark.y][shark.x] = true;
 
-        while(!deque.isEmpty()){
-            Shark current = deque.pollFirst();
+    //물고기 먹으러 가기(가까운애 탐색하기) xxx
+    // 상어위치에서 시작해서 각 물고기들 위치 큐에 담아오기
 
-            //고기먹을때
-            if(map[current.y][current.x] > 0){
-                if(current.size > map[current.y][current.x]){
-                    current.eatCount += 1;
-                }
-                map[current.y][current.x] = 0;
-            }
 
-            if(current.size == current.eatCount) current.size += 1;
-
-            for (int i = 0; i < 4; i++) {
-                int nextY = current.y + dy[i];
-                int nextX = current.x + dx[i];
-
-                if(nextY < 0 || nextY >= N || nextX < 0 || nextX <= N) continue;
-                if(visited[nextY][nextX]) continue;
-
-                visited[nextY][nextX] = true;
-                deque.offerLast(new Shark(nextY,nextX, current.size, current.eatCount));
-            }
-        }
-
-    }
-
-    private static void fillMap(BufferedReader br) throws IOException {
+    private static Shark fillMap(BufferedReader br) throws IOException {
         map = new int[N][N];
+        Shark shark = null;
         StringTokenizer st;
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < N; j++) {
                 map[i][j] = Integer.parseInt(st.nextToken());
                 if(map[i][j] == 9){
-                    shark = new Shark(i,j,2,0);
+                    shark = new Shark(i,j);
                 }
             }
         }
+        return shark;
     }
 
-    private static class Shark{
-        int y,x;
+
+    private static class Node{
+        int y;
+        int x;
+
+        Node(int y, int x) {
+            this.y = y;
+            this.x = x;
+        }
+    }
+
+    private static class Shark extends Node{
         int size;
-        int eatCount;
+        int sizeStack;
+        Shark(int y, int x) {
+            super(y, x);
+            this.size = 2;
+            this.sizeStack = 0;
+        }
 
-        Shark(int y,int x,int size,int eatCount){
-            this.y = y;
-            this.x = x;
+        public void addSizeStack() {
+            this.sizeStack++;
+        }
+
+        public void setSize(int size) {
             this.size = size;
-            this.eatCount = eatCount;
         }
     }
 
-    private static class Fish{
-        int y,x;
-        int distance;
-
-        Fish(int y, int x, int distance){
-            this.y = y;
-            this.x = x;
-            this.distance = distance;
-        }
-    }
 
 }
