@@ -16,7 +16,7 @@ public class problem_16236 {
     private static int answer = 0;
 
     //우선순위따로 지정해서 fish들 리스트에 추가해주기
-    
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
