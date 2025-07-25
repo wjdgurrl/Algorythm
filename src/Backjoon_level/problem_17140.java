@@ -22,49 +22,142 @@ public class problem_17140 {
 
     public static void searchArray(int[][] A){
         int time = 0;
-        int[][] temp = A.clone();//깊은 복사
-        ArrayList<Node> arr;
-        while(temp[r][c] == k || time < 100){
+        while(time <= 100){
             //1. 등장 회수가 커지는 순
             //2. 수가 커지는 순
             //배열 정렬하고 리스트<노드>에 담아서 등장회수 대로 정렬
-            for (int i = 0; i < 3; i++) {
-                arr = new ArrayList<>();
-                //여기서 인덱스 오류터짐 **
-                int[] a = temp[i].clone();
-                int beforeNum = 0;
-                Arrays.sort(a);
+            if (r - 1 < A.length && c - 1 < A[0].length && A[r - 1][c - 1] == k) {
+                System.out.println(time);
+                return;
+            }
+            if(time == 100){
+                System.out.println(-1);
+                return;
+            }
 
-                for (int j = 0; j < a.length; j++) {
-                    if(beforeNum == a[j] && j != 0){
-                        arr.get(j-1).plusCount();
-                    } else {
-                        arr.add(new Node(a[j],1));
-                    }
-                    beforeNum = a[j];
-                }
+            if (A.length >= A[0].length) {
+                A = excuteR(A);
+            } else {
+                A = excuteC(A);
+            }
+            time++;
+        }
+    }
 
-                int[] sortedArray = new int[arr.size() * 2];
-                int idx = 0;
-                for (int j = 0; j < sortedArray.length; j+=2) {
-                    //어레이리스트 접근할때 어레이 리스트껄로 해야함
-                    if(arr.get(idx).num != 0){
-                        sortedArray[j] = arr.get(idx).num;
-                        sortedArray[j+1] = arr.get(idx).count;
-                    }
+    /*public static int[][] excuteR(int[][] A){
+        ArrayList<Node> arr;
+        ArrayList<ArrayList<Node>> newArr = new ArrayList<>();
+        int size = 0;
+
+        for (int i = 0; i < A.length; i++) {
+            arr = new ArrayList<>();
+            int[] a = A[i].clone();
+            int beforeNum = 0; //다음숫자랑 같은지 비교용
+
+            Arrays.sort(a);
+
+            int idx = 0;
+            for (int j = 0; j < a.length; j++) {
+                if(beforeNum == a[j] && j != 0){
+                    arr.get(idx-1).plusCount();
+                } else {
+                    arr.add(new Node(a[j],1));
                     idx++;
                 }
-                System.out.println(Arrays.toString(sortedArray));
+                beforeNum = a[j];
             }
 
 
-
-
-            time++;
+            size = Math.max(arr.size() * 2, size);
+            newArr.add(arr);
         }
 
+        size = Math.min(100,size);
 
+        int[][] newA = new int[A.length][size];
+        for(int i = 0; i < A.length; i++){
+            ArrayList<Node> row =  newArr.get(i);
+            int index = 0;
+            for(int j = 0; j < row.size() * 2 && j < 100; j++,index++){
+                newA[i][j] = row.get(index).num;
+                j++;
+                newA[i][j] = row.get(index).count;
+            }
+        }
+
+        return newA;
+    }*/
+
+    public static int[][] excuteR(int[][] A) {
+        int rowLen = A.length;
+        int maxColLen = 0; // 이 값은 실제 배열의 최대 열 길이 (100까지 제한되지 않은)
+
+        List<List<Integer>> newRows = new ArrayList<>(); // List<List<Integer>>로 변경
+
+        for (int[] ints : A) {
+            int[] count = new int[101]; // 숫자 1부터 100까지의 개수를 저장
+            for (int j = 0; j < ints.length; j++) {
+                if (ints[j] == 0) continue; // 0은 개수에 포함되지 않음
+                count[ints[j]]++;
+            }
+
+            List<Node> nodeList = new ArrayList<>();
+            for (int num = 1; num <= 100; num++) { // 숫자는 1부터 100까지
+                if (count[num] > 0) {
+                    nodeList.add(new Node(num, count[num]));
+                }
+            }
+            nodeList.sort((a, b) -> {
+                if (a.count == b.count) return a.num - b.num;
+                return a.count - b.count;
+            });
+
+            List<Integer> currentRowList = new ArrayList<>();
+            for (Node node : nodeList) {
+                currentRowList.add(node.num);
+                currentRowList.add(node.count);
+            }
+
+
+            if (currentRowList.size() > 100) {
+                currentRowList = currentRowList.subList(0, 100);
+            }
+
+            maxColLen = Math.max(maxColLen, currentRowList.size());
+            newRows.add(currentRowList);
+        }
+
+        int finalColLen = Math.min(100, maxColLen);
+        int[][] result = new int[rowLen][finalColLen];
+
+        for (int i = 0; i < rowLen; i++) {
+            List<Integer> row = newRows.get(i);
+            for (int j = 0; j < row.size(); j++) {
+                result[i][j] = row.get(j);
+            }
+        }
+        return result;
     }
+
+    public static int[][] excuteC(int[][] A){
+        A = transe(A);
+        A = excuteR(A);
+        A = transe(A);
+        return A;
+    }
+
+    public static int[][] transe(int[][] A){
+        int row = A.length;
+        int col = A[0].length;
+        int[][] transedA = new int[col][row];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                transedA[j][i] = A[i][j];
+            }
+        }
+        return transedA;
+    }
+
 
     public static class Node{
         int num;
