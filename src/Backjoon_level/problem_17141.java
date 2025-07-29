@@ -61,19 +61,21 @@ public class problem_17141 {
     public static void bfs(ArrayList<Node> selectedList){
         ArrayDeque<Node> deque = new ArrayDeque<>();
         boolean[][] visited = new boolean[N][N];
+        int[][] infected = new int[N][N];
+        for(int i=0;i<N;i++){
+            Arrays.fill(infected[i],-1);
+        }
         int maxTime = 0;
 
         for(Node node:selectedList){
             deque.offerLast(node);
             visited[node.y][node.x] = true;
+            infected[node.y][node.x] = 0; //바이러스 시작 위치
         }
 
         while(!deque.isEmpty()){
             Node node = deque.pollFirst();
-
-            if(map[node.y][node.x] == 0){
-                maxTime = Math.max(node.time, maxTime);
-            }
+            infected[node.y][node.x] = node.time;
 
             for(int i=0;i<4;i++){
                 int nextX = node.x + dx[i];
@@ -88,6 +90,14 @@ public class problem_17141 {
 
             }
         }
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (map[i][j] != 1) {
+                    maxTime = Math.max(maxTime, infected[i][j]);
+                }
+            }
+        }
+
 
         if(checkMap(visited)){
             minTime = Math.min(maxTime,minTime);
@@ -99,7 +109,7 @@ public class problem_17141 {
         for(int i=0;i<N;i++){
             for(int j=0;j<N;j++){
                 //0인데 방문 안한곳 있음
-                if((map[i][j] == 0) && !visited[i][j]){
+                if((map[i][j] == 0 || map[i][j] == 2) && !visited[i][j]){
                     return false;
                 }
             }
