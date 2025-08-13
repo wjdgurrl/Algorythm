@@ -11,9 +11,25 @@ public class problem_2293 {
         int n = Integer.parseInt(line[0]);
         int k = Integer.parseInt(line[1]);
 
-        for (int i = 1; i <= n; i++) {
-            
+        StringTokenizer st;
+        int[] coins = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine());
+            coins[i] = Integer.parseInt(st.nextToken());
         }
+
+        int[] dp = new int[k + 1];
+        dp[0] = 1;
+
+        for (int coin : coins) {
+            for (int j = coin; j <= k; j++) {
+                dp[j] += dp[j - coin];
+            }
+        }
+
+        System.out.println(dp[k]);
+
 
     }
 }
